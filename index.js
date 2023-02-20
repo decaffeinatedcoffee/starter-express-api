@@ -19,7 +19,6 @@ var cors = require('cors');
 app.use(cors());
 const client = new OneSignal.Client(process.env.OSID, process.env.OSKEY);
 
-
 app.post("/register", async function(req, res){
     var email = req.body.email;
     var pass = req.body.pass;
