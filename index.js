@@ -39,6 +39,7 @@ app.post("/register", async function(req, res){
             if(dbmail == email){
               res.send(JSON.stringify({"error":true, "data":"error"}));  
               inUse = true;
+              return
             } 
         }
     }
@@ -56,6 +57,7 @@ app.post("/register", async function(req, res){
         keyv.set(`user${parseInt(userCount)+1}`, JSON.stringify(user));
         keyv.set("userCount", parseInt(userCount) + 1);
         res.send({"error":false, "data":"success"});
+          return
       });
       }
 })
@@ -80,6 +82,7 @@ app.post("/register", async function(req, res){
             bcrypt.hash(userToken, 10, function(err, hashToken) {
             currentUser.loginToken = hashToken
             keyv.set(`user${i-1}`, JSON.stringify(currentUser));
+              return
           });
             }else{
               res.send(JSON.stringify({error:true, data:"Senha inválida"}));
@@ -133,6 +136,7 @@ app.post("/register", async function(req, res){
                return
         }else{
           res.send(JSON.stringify({error:true, data:"tokenerr"}));
+          return
         }
       });
       }
