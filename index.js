@@ -78,7 +78,11 @@ app.post("/register", async function(req, res){
           bcrypt.compare(pass, currentUser.pass, function(err, result) {
             if(result == true){
               let userToken = uuid.replace(/-/g, '').toString();
+              try{
             res.send(JSON.stringify({error:false, data:{token:userToken, mail:mail}}));
+              }catch{
+              console.log("error sending login success headers");
+              }
             bcrypt.hash(userToken, 10, function(err, hashToken) {
             currentUser.loginToken = hashToken
             keyv.set(`user${i-1}`, JSON.stringify(currentUser));
