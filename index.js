@@ -76,10 +76,12 @@ app.post("/register", async function(req, res){
         if(dbmail == mail){
           userfound = true;
           bcrypt.compare(pass, currentUser.pass, function(err, result) {
-            if(result == true){
+            if(result === true){
               let userToken = uuid.replace(/-/g, '').toString();
               try{
+                if(userToken){
             res.send(JSON.stringify({error:false, data:{token:userToken, mail:mail}}));
+                }
               }catch{
               console.log("error sending login success headers");
               }
@@ -98,6 +100,7 @@ app.post("/register", async function(req, res){
     }
     if(userfound == false){
     res.send(JSON.stringify({error:true, data:"Usuário invalido"}));
+      return
     }
   })
 
